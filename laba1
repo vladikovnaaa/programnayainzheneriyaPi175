@@ -1,0 +1,19 @@
+//Лабораторная работа №1
+    var express = require('express');
+    var app = express();
+
+    var server = app.listen(7998, function () {
+    var host = server.address().address
+    var port = server.address().port
+
+    console.log("Example app listening at http://%s:%s", host, port)
+})
+    //Пункт 1 http://localhost:7998/p1/865
+        app.get("/p1/:parametr", (req, result)=>
+        {
+            var num={
+                num: req.params.parametr,
+            }
+            var json = JSON.stringify(num);
+            result.send(json);
+        });
