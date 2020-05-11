@@ -11,7 +11,6 @@
     })
     var mysql = require('mysql');
 
-
     function connect()
     {
         var connecti = mysql.createConnection({
@@ -21,5 +20,18 @@
             database: 'laba2'
         });
         connecti.connect();
+
         return connecti;
     }
+
+    //select http://localhost:7998/pol/?table=service
+    app.get("/pol", (req, resil)=>
+    {
+        var connecti = connect();
+        var tables = req.query.table;
+        connecti.query("call proc(?,?,?,?,?)", [tables, 'pol', '-', '-', '-'], function(errors, resultate) {
+            if (errors) throw errors;
+            resil.send(resultate[0]);
+        });
+        connecti.end();
+    });
