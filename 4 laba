@@ -1,0 +1,28 @@
+	//Лабораторная работа №4
+
+    var express = require('express');
+    var app = express();
+    var mysql = require('mysql');
+
+    var server = app.listen(7998, function ()
+    {
+    var host = server.address().address
+    var port = server.address().port
+
+        console.log("Example app listening at http://%s:%s", host, port)
+    })
+
+	app.get("/", (reque, res)=>
+	{
+		request.get("http://www.mocky.io/v2/5c7db5e13100005a00375fda", function(error, response, body)
+		{
+			var docum = body;
+			var object = JSON.parse(docum);
+		
+			var massiv = object.resultate.split(" ");
+			object.resultate = massiv.join("_");
+			
+			var json = JSON.stringify(object);	
+			res.send(json);
+		});	
+	});
