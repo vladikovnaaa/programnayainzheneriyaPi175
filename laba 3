@@ -1,0 +1,64 @@
+
+	var url = 'http://localhost:65743/WebService.asmx?wsdl';
+
+	var express = require('express');
+	var app = express();
+	var soap = require('soap');
+
+	app.get("/val", (req, res)=>
+	{
+		var arguments = {table: 'applications'};
+
+		soap.createClient(url, function(err, client) {
+			client.GetTable(arguments, function(err, sum) 
+			{
+				res.send(sum);
+			});
+	  });
+	});
+
+	app.get("/ins", (req, res)=>
+	{
+		var arguments = {table: 'clients', param1:'new Data1', param2:'new Data2'}; 
+
+		soap.createClient(url, function(err, client) {
+			client.AddTable(arguments, function(err, sum) 
+			{
+				res.send(sum);
+			});
+	  });
+	});
+
+	//update___http://localhost:7998/upd - Запрос Update
+	app.get("/upd", (req, res)=>
+	{
+		var arguments = {table: 'services', param1:'new Data1', param2:'new Data2', id:'1'}; //name- название таблицы:applications, clients, services 
+
+		soap.createClient(url, function(err, client) {
+			client.UpdateTable(arguments, function(err, sum) 
+			{
+				res.send(sum);
+			});
+	  });
+	});
+
+
+	app.get("/del", (req, res)=>
+	{
+		var arguments = {table: 'clients', id:'5'}; //name- название таблицы:applications, clients, services 
+
+		soap.createClient(url, function(err, client) {
+			client.DeleteTable(arguments, function(err, sum) 
+			{
+				res.send(sum);
+			});
+	  });
+	});
+
+
+	var server = app.listen(7998, function () {
+	   var host = server.address().address
+	   var port = server.address().port
+	   
+	   console.log("Example app listening at http://%s:%s", host, port)
+	})
